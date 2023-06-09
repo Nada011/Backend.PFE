@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,15 +30,19 @@ public class ContratController {
 
 	
 	@GetMapping("/Contrats")
+	@PreAuthorize("hasRole('Admin')or hasRole('Chef d’escale')")
+	
 	public List<Contrat> getAllContrats() {
 		return ContratService.getAllContrats();
 	}
 	@PutMapping("Contrat/update")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Contrat> updateContrat(@RequestBody Contrat Contrat) {
 		return ResponseEntity.ok().body(ContratService.updateContrat(Contrat));
 	}
 
 	@PostMapping("Contrat/add")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Contrat> createContrat(@RequestBody Contrat Contrat) {
 		URI uri = URI.create(
 				ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/Contrat/add").toUriString());
@@ -45,6 +50,7 @@ public class ContratController {
 	}
 
 	@DeleteMapping("Contrat/delete/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public void deleteContrat(@PathVariable("id") Long id) {
 
 		ContratService.deleletContrat(id);

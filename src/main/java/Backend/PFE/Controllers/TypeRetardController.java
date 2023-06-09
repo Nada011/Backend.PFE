@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,16 +30,19 @@ public class TypeRetardController {
 	private TypeRetardService TypeRetardService;
 
 	@GetMapping("/typeRetards")
+	@PreAuthorize("hasRole('Admin')or hasRole('Chef d’escale')")
 	public ResponseEntity<List<TypeRetard>> getAllTypeRetards() {
 		return ResponseEntity.ok().body(TypeRetardService.getAllTypeRetard());
 	}
 
 	@PutMapping("typeRetard/update")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<TypeRetard> updateTypeRetard(@RequestBody TypeRetard TypeRetard) {
 		return ResponseEntity.ok().body(TypeRetardService.updateTypeRetard(TypeRetard));
 	}
 
 	@PostMapping("typeRetard/add")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<TypeRetard> createTypeRetard(@RequestBody TypeRetard TypeRetard) {
 		URI uri = URI.create(
 				ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/typeRetard/add").toUriString());
@@ -47,6 +51,7 @@ public class TypeRetardController {
 	}
 
 	@DeleteMapping("typeRetard/delete/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public void deleletTypeRetard(@PathVariable("id") Long id) {
 
 		TypeRetardService.deleletTypeRetard(id);

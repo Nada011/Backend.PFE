@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,16 +29,19 @@ public class FournisseurController {
 	private FournisseurService FournisseurService;
 
 	@GetMapping("/fournisseurs")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<List<Fournisseur>> getAllUsers() {
 		return ResponseEntity.ok().body(FournisseurService.getAllFournisseurs());
 	}
 
 	@PutMapping("fournisseur/update")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Fournisseur> updateUsers(@RequestBody Fournisseur fournisseur) {
 		return ResponseEntity.ok().body(FournisseurService.updateFournisseur(fournisseur));
 	}
 
 	@PostMapping("fournisseur/add")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur) {
 		URI uri = URI.create(
 				ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/fournisseur/add").toUriString());
@@ -45,6 +49,7 @@ public class FournisseurController {
 	}
 
 	@DeleteMapping("fournisseur/delete/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public void deleteFournisseur(@PathVariable("id") Long id) {
 
 		FournisseurService.deleletFournisseur(id);

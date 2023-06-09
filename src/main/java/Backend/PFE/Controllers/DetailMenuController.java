@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,16 +28,19 @@ public class DetailMenuController {
 	private MenuDetailService DetailMenuService;
 
 	@GetMapping("/DetailMenu/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<List<MenuDetail>> getDetailMenu(@PathVariable("id")Long id) {
 		return ResponseEntity.ok().body(DetailMenuService.findMenuDetailByMenuId(id));
 	}
 
 	@PutMapping("DetailMenu/update")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<MenuDetail> updateDetailMenu(@RequestBody MenuDetail DetailMenu) {
 		return ResponseEntity.ok().body(DetailMenuService.updateMenuDetail(DetailMenu));
 	}
 
 	@PostMapping("DetailMenu/add")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<List<MenuDetail>> createDetailMenu(@RequestBody List <MenuDetail> DetailMenu) {
 		URI uri = URI.create(
 				ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/DetailMenu/add").toUriString());
@@ -46,6 +50,7 @@ public class DetailMenuController {
 	
 
 	@DeleteMapping("DetailMenu/delete/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public void deleletDetailMenu(@PathVariable("id") Long id) {
 
 		DetailMenuService.deleletMenuDetail(id);

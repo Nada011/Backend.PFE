@@ -47,6 +47,9 @@ public class MenuDetail implements Serializable {
 	public String getNomArticleFr(){
 		return this.article.getNomArticleFr();
 	}
+
+
+
 	public String getNomArticleAr(){
 		return this.article.getNomArticleAr();
 	}
@@ -56,7 +59,7 @@ public class MenuDetail implements Serializable {
 	public double getIdArticle(){
 		return this.article.getId();
 	}
-	public double getIdMenu(){
+	public Long getIdMenu(){
 		return this.menu.getId();
 	}
 }

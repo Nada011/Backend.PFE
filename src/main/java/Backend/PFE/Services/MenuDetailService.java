@@ -7,7 +7,7 @@ import Backend.PFE.Entities.MenuDetail;
 public interface MenuDetailService {
 	public MenuDetail updateMenuDetail (MenuDetail MenuDetail );
 
-	public MenuDetail  addMenuDetail (MenuDetail  MenuDetail );
+	
 
 	public List<MenuDetail > getAllMenuDetail ();
 

@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -40,22 +41,28 @@ public class Contrat implements Serializable{
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-dd-MM")
 	private Date dateDebut;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-dd-MM")	
 	private Date dateFin;
+	
 	@OneToOne
 	private  Menu Menu;
-	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Fournisseur fournisseur;
-	
+	@JsonBackReference(value="Contrat-Fournisseur")
+
+	public Fournisseur getFournisseur(){
+		return this.fournisseur;
+	}
+
+
 	public Long getFournisseurId() {
-		return fournisseur.getId();
+		return fournisseur!=null?this.getFournisseur().getId():null;
 	}
 	public String getFournisseurNom() {
-		return fournisseur.getNom();
+		return fournisseur!=null?this.getFournisseur().getNom():null;
 	}
 	
 	

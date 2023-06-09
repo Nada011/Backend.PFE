@@ -1,11 +1,14 @@
 package Backend.PFE.Repositories;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import Backend.PFE.Entities.MenuDetail;
+
+import Backend.PFE.Entities.Passager;
+import Backend.PFE.Entities.Vol;
 
 @Repository
-public interface MenuDetailRepository  extends JpaRepository<MenuDetail, Long>  {
-public List<MenuDetail> findByMenuId(Long d);
+public interface VolRepository extends JpaRepository<Vol, Long>{
+	
 }

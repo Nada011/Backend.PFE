@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +32,12 @@ public class MenuController {
 	private MenuService MenuService;
 
 	@GetMapping("/Menu")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<List<Menu>> getAllMenu() {
 		return ResponseEntity.ok().body(MenuService.getAllMenu());
 	}
 	@PostMapping("Menu/add")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Menu> createContrat(@RequestBody Menu Menu) {
 		URI uri = URI.create(
 				ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/Menu/add").toUriString());
@@ -42,6 +45,7 @@ public class MenuController {
 	}
 
 	@PutMapping("Menu/update")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<Menu> updateMenu(@RequestBody Menu Menu) {
 		return ResponseEntity.ok().body(MenuService.updateMenu(Menu));
 	}
@@ -49,6 +53,7 @@ public class MenuController {
 
 
 	@DeleteMapping("Menu/delete/{id}")
+	@PreAuthorize("hasRole('Admin')")
 	public void deleletMenu(@PathVariable("id") Long id) {
 
 		MenuService.deleletMenu(id);

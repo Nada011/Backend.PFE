@@ -13,5 +13,5 @@ public interface ContratService {
 	public List<Contrat> getAllContrats();
 
 	public void deleletContrat(Long id);
-	public Fournisseur getFournisseur(Long id);
+	
 }

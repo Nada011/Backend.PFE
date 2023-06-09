@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,43 +16,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import Backend.PFE.Entities.Article;
-import Backend.PFE.Entities.Fournisseur;
-import Backend.PFE.Services.ArticleService;
+import Backend.PFE.Entities.Role;
+import Backend.PFE.Entities.TypeRetard;
+import Backend.PFE.Services.RoleService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/Admin")
-public class ArticleController {
+@RequestMapping
+public class RoleController {
 	@Autowired
-	private ArticleService ArticleService;
+	private RoleService RoleService;
 
-	@GetMapping("/articles")
+	@GetMapping("/Role")
 	@PreAuthorize("hasRole('Admin')")
-	public ResponseEntity<List<Article>> getAllArticles() {
-		return ResponseEntity.ok().body(ArticleService.getAllArticles());
+	public ResponseEntity<List<Role>> getAllRetards() {
+		return ResponseEntity.ok().body(RoleService.getAllRoles());
 	}
-
-	@PutMapping("article/update")
+	@PostMapping("Role/add")
 	@PreAuthorize("hasRole('Admin')")
-	public ResponseEntity<Article> updateArticle(@RequestBody Article article) {
-		return ResponseEntity.ok().body(ArticleService.updateArticle(article));
-	}
+	public ResponseEntity<Role> addRetard(@RequestBody Role Role) {
+		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("Retard/add").toUriString());
 
-	@PostMapping("article/add")
+		return ResponseEntity.created(uri).body(RoleService.addRole(Role));
+		
+	}
+	@PutMapping("Role/update")
 	@PreAuthorize("hasRole('Admin')")
-	public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-		URI uri = URI
-				.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("Admin/article/add").toUriString());
-		return ResponseEntity.created(uri).body(ArticleService.addArticle(article));
+	public ResponseEntity<Role> updateRole(@RequestBody Role role) {
+		return ResponseEntity.ok().body(RoleService.updateRole(role));
 	}
-
-	@DeleteMapping("article/delete/{id}")
+	@DeleteMapping("Role/delete/{id}")
 	@PreAuthorize("hasRole('Admin')")
-	public void deleteArticle(@PathVariable("id") Long id) {
+	public void deleletRole(@PathVariable("id") String role) {
 
-		ArticleService.deleletArticle(id);
+		RoleService.deleletRole(role);
 	}
-
 }

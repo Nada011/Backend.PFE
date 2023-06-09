@@ -55,10 +55,6 @@ public class ContratServiceImpl implements ContratService {
 		
 	}
 
-	@Override
-	public Fournisseur getFournisseur(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

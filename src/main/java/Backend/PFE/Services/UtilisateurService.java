@@ -11,6 +11,6 @@ public interface UtilisateurService {
 
 	public List<Utilisateur> getAllUsers();
 
-	public void deleletUser(Long id);
+	public void deleletUser(String email);
 
 }
